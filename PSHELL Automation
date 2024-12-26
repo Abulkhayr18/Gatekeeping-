@@ -1,0 +1,152 @@
+$ # Choose whether to encrpt or decrypt a file
+$action = Read-Host " Do you want to encrpty or decrpty a file? ('Encrypt' or 'Decrypt')"
+
+# Define what happens for encryption and decryption
+if ($action -eq "encrypt") {
+    #Ask for the file to encrypt
+    $filePath = Read-Host "Enter the full path of the file you want to encrypt (e.g. C:\example.txt)"
+}
+    #Check if the file exists
+if (Test-Path $filePath) {
+    #Get the content of the file
+    $filecontent = Get-Content -Path $filePath
+   
+    #Convert the content to a secure string
+        $secureContent = 
+        ConvertTo-SecureString $fileContent
+        -AsPlainText -Force
+        #Encrypt the content
+        $encryptContent =
+    ConvertFrom-SecureString $secureContent
+
+       #Save the encrypted content to a new file
+              $encryptedFile = "$filePath.encrypted"
+                     Set-Content -Path
+        $encryptedFile -'Value' 
+        $encryptedContent
+
+        Write-Output "File has been encrypted and saved as "$encryptedFile
+} elseif ($action -eq "decrypt") {
+    #Ask for the encrypted file to decrypt
+    $encryptedFilePath = Read-Host "Enter the full path of the encrypted file (e.g., C:\example.txt.encrypted)"
+    
+         #Check if the encrypted file exists
+         if (Test-path $encryptedFilePath) {
+            try {
+                #Read the encrypted contnet from the file
+                $encryptedContent = Get-Content -Path $encryptContent
+                     # Convert the centent from secure string
+                     $secureContent = ConvertTo-SecureString
+                     $encryptContent
+                     #Decrypt the secure string
+                     $decryptedContent = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureContent))
+                      
+                     Write-Output "Decrypted content: $decryptedContent"
+                    } catch {
+                        Write-Output "Error Unable to decrypt the file. It may not be valid encrypted file"
+                    }
+         } else {
+            Write-Output "Encrypted file not found! Please check the file path and try again."
+         }
+} else {
+    Write-Output "Invalid action.
+    Please choose 'encrypt' or 'decrypt'."
+}
+
+#Basic String matching
+$Fruits = Read-Host " Enter the name of a fruit (Apple, Banana, Orange)"
+
+switch ($Fruits) {
+    "Apple"  { Write-Output "Apple are red or green?."}
+    "Banana" { Write-Output "Bananas are yellow."}
+    "Orange" { Write-Output "Well, Orange are Orange"}
+  default  { Write-Output "I dont recognise the fruit."}
+}
+
+#Wildcard Matching
+$Fruits = Read-Host "Enter the name of the fruit (Apple, Banana, Orange)"
+
+Switch -Wildcard ($Fruits) {
+    "Ap*"  { Write-Output "You enetered something that starts with 'Ap'."}
+    "*ana" { Write-Output "You etered something that ends with ana"}
+    "*Orange" {Write-Output " Looks like you entered something ending in 'orange'. "}
+    default {Write-Output "I dont recognise the fruit"}
+}
+
+#multiple Conditions
+$day =Read-Host "Enter a day of the week (Monday, Tuesday, Wednesday, Thursday, Friday,.....)"
+
+Switch ($day) {
+    "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"  {Write-Output "Its a weekday"}
+         "Saturday", "Sunday", {Write-Output "Its the weekend"}
+}
+
+#List of strings
+$names = @("Alice", "Bob","Abulkhayr", "Ummulkhayr", "Firdausi", "Ahmad")
+
+#Uisng ForeEach to loop through the lists and print each name
+ForEach ($name in $names) {
+    Write-Host "Hello, $name!"
+}
+
+#User Information
+$Users = @()
+
+#Number of Users to create
+$numOfUsers = Read-Host "How many users do you want to create?"
+
+#Use a for loop to create user
+For ($i =1; -le $numberOfUers; $i++) {
+    $Username = Read-Host "Enter the Username for user $i"
+    $password = Read-Host "Enter the passwprd for user $i"
+}
+
+#Store the username and password in a hashtable
+$User =@{
+    Username = $Username
+    password = $password
+} 
+
+$Department = "IT"
+
+Switch ($Department) {
+    "IT" {
+        Add-AzureADGroupMember -Identity "ITAdmins" -Memebers $Username
+    }
+}
+
+#Using For loop to add users 
+
+# Array f username to add 
+$Usernames = @("John.doe", "Jane.Smith", "alex.tan", "alice.jones," "mike.bam")
+for ($i = 0; $i -lt $Usernames.Length; $i++) {
+    $Username = $usernames[$i]
+    #Simulate user creation (replace with rel cmdlet for actual IAM management )
+    Write-Output "Creating user $Username"
+
+    #optionally, assign a default role for new users
+    Write-Output "Assign 'viewer role to: $Username"
+}
+ 
+#Using while loop to list all the users
+$i = 0
+while ($i -lt $usernames.Length) {
+    $Username = $Usernames[$i]
+    Write-Output "User: $username"  $i++
+}
+$i = 0
+do {
+    $username = $usernames[$i]
+  #  Role assignment logic based on $Usernames
+  if ($username -match "admin") { 
+    $role = "Admin"
+  } elseif ( $username -match "editor") {
+    $role = "Editor"
+  } else {
+    $role = "Viewer"
+  }
+  Write-Output "Assigning role '$role' to user: $username"
+  $i++
+} while ($i -lt $username.Length)
+    
+
